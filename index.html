@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sathyaseelan N — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0F1C;
+    --bg-panel:#0F1729;
+    --bg-panel-2:#131D33;
+    --text:#E6EBF5;
+    --text-muted:#8B95AC;
+    --text-dim:#5B6479;
+    --cyan:#4FD1C5;
+    --cyan-dim:rgba(79,209,197,0.18);
+    --amber:#F2A65A;
+    --line:rgba(79,209,197,0.22);
+    --border:rgba(255,255,255,0.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--cyan-dim);color:var(--cyan);}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--cyan);
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  /* nav */
+  nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(10,15,28,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:64px;
+  }
+  .nav-name{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    color:var(--text);
+  }
+  .nav-name span{color:var(--cyan);}
+  .nav-links{
+    display:flex;
+    gap:22px;
+    align-items:center;
+  }
+  .nav-links a{
+    font-size:13.5px;
+    color:var(--text-muted);
+    transition:color .2s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--cyan);}
+
+  /* hero */
+  header.hero{
+    position:relative;
+    padding:120px 0 90px;
+    overflow:hidden;
+  }
+  .trace-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    opacity:0.35;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;}
+  .hero h1{
+    font-size:clamp(38px,6vw,58px);
+    line-height:1.05;
+    margin:18px 0 20px;
+  }
+  .hero h1 .accent{color:var(--cyan);}
+  .hero p.lede{
+    font-size:17px;
+    color:var(--text-muted);
+    max-width:560px;
+    margin-bottom:34px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    padding:11px 20px;
+    border-radius:6px;
+    border:1px solid var(--border);
+    color:var(--text);
+    transition:border-color .2s ease, background .2s ease, transform .15s ease;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .btn:hover, .btn:focus-visible{
+    border-color:var(--cyan);
+    background:var(--cyan-dim);
+    transform:translateY(-1px);
+  }
+  .btn.primary{
+    background:var(--cyan-dim);
+    border-color:var(--cyan);
+    color:var(--cyan);
+  }
+  .btn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+
+  section{
+    padding:80px 0;
+    border-top:1px solid var(--border);
+  }
+  section .eyebrow{margin-bottom:14px;}
+  section h2{
+    font-size:28px;
+    margin-bottom:28px;
+  }
+
+  /* about */
+  #about p{
+    font-size:16.5px;
+    color:var(--text-muted);
+    max-width:680px;
+  }
+  #about p + p{margin-top:16px;}
+  #about strong{color:var(--text);font-weight:500;}
+
+  /* signature: state machine journey */
+  .fsm-wrap{
+    margin-top:10px;
+    overflow-x:auto;
+    padding-bottom:8px;
+  }
+  .fsm{
+    display:flex;
+    align-items:center;
+    min-width:640px;
+  }
+  .fsm-node{
+    flex:0 0 auto;
+    width:118px;
+    height:118px;
+    border-radius:50%;
+    border:1.5px solid var(--cyan);
+    background:var(--bg-panel);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:10px;
+    position:relative;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .fsm-node:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 0 4px var(--cyan-dim);
+  }
+  .fsm-node .state-id{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--cyan);
+    margin-bottom:4px;
+  }
+  .fsm-node .state-name{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:14px;
+    font-weight:600;
+  }
+  .fsm-node .state-out{
+    font-size:10.5px;
+    color:var(--text-dim);
+    margin-top:3px;
+    font-style:italic;
+  }
+  .fsm-arrow{
+    flex:1 1 auto;
+    min-width:36px;
+    height:2px;
+    background:linear-gradient(90deg, var(--cyan), var(--cyan) 70%, transparent 70%, transparent 100%);
+    background-size:12px 2px;
+    position:relative;
+  }
+  .fsm-arrow::after{
+    content:'';
+    position:absolute;
+    right:0;
+    top:50%;
+    transform:translateY(-50%);
+    width:0;height:0;
+    border-top:5px solid transparent;
+    border-bottom:5px solid transparent;
+    border-left:7px solid var(--cyan);
+  }
+  .fsm-caption{
+    font-size:13px;
+    color:var(--text-dim);
+    margin-top:18px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  /* projects */
+  .project-card{
+    background:var(--bg-panel);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:28px 30px;
+    margin-bottom:22px;
+    transition:border-color .2s ease;
+  }
+  .project-card:hover{border-color:var(--cyan);}
+  .project-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:10px;
+  }
+  .project-card h3{
+    font-size:20px;
+  }
+  .project-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--amber);
+    border:1px solid rgba(242,166,90,0.35);
+    padding:3px 9px;
+    border-radius:20px;
+    white-space:nowrap;
+  }
+  .project-card p{
+    color:var(--text-muted);
+    font-size:15px;
+    margin-bottom:16px;
+  }
+  .stack-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .stack-chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--cyan);
+    background:var(--cyan-dim);
+    padding:4px 10px;
+    border-radius:5px;
+  }
+  .project-link{
+    font-size:13.5px;
+    color:var(--text);
+    border-bottom:1px solid var(--cyan);
+    padding-bottom:1px;
+    transition:color .2s ease;
+  }
+  .project-link:hover, .project-link:focus-visible{color:var(--cyan);}
+
+  /* skills */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;
+  }
+  .skill-group .eyebrow{
+    font-size:11px;
+    margin-bottom:12px;
+    display:block;
+  }
+  .skill-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .skill-pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    padding:6px 12px;
+    border-radius:5px;
+    border:1px solid var(--border);
+    color:var(--text-muted);
+  }
+
+  /* contact */
+  #contact h2{margin-bottom:14px;}
+  #contact p{
+    color:var(--text-muted);
+    max-width:520px;
+    margin-bottom:30px;
+    font-size:16px;
+  }
+  .contact-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+  }
+  footer{
+    padding:30px 0 50px;
+    text-align:center;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--text-dim);
+  }
+
+  @media (max-width:640px){
+    .hero{padding:90px 0 60px;}
+    section{padding:56px 0;}
+    .project-head{flex-direction:column;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-name">S<span>_</span>N</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="trace-bg" viewBox="0 0 920 400" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M -20 60 H 200 V 140 H 500 V 40 H 780 V 200 H 950" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+    <path d="M -20 320 H 150 V 260 H 420 V 360 H 700 V 300 H 950" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+    <circle cx="200" cy="60" r="3" fill="var(--cyan)"/>
+    <circle cx="500" cy="40" r="3" fill="var(--cyan)"/>
+    <circle cx="420" cy="360" r="3" fill="var(--cyan)"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <p class="eyebrow">// student · vellore institute of technology</p>
+    <h1>Sathyaseelan N<br>builds <span class="accent">logic you can trace</span>, in silicon and in code.</h1>
+    <p class="lede">A finite-state machine doesn't guess — its next move is defined by where it already is. That's the same discipline I bring to every project, whether it's a lock circuit or a booking flow.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn" href="mailto:sathyaseelan.n2024@vitstudent.ac.in">Get in touch</a>
+      <a class="btn" href="https://github.com/sathyaseelann2024" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <p class="eyebrow">// about</p>
+    <h2>Why state matters</h2>
+    <p>I like systems that make their logic visible. A digital locker that only opens when its internal <strong>state</strong> allows it. A booking page that only shows the next step once the current one is done. That way of thinking started with digital design — building a <strong>Moore machine</strong>, where the output depends purely on the current state, nothing hidden, nothing guessed.</p>
+    <p>It carried straight over into web development. Building a train ticket booking system in React meant thinking in the same terms: what state is this screen in, what triggers the next one, what should never be allowed to happen. I'm looking for an internship where I can keep working at that overlap — writing code that's as deliberate as a state diagram.</p>
+  </div>
+</section>
+
+<section id="journey">
+  <div class="wrap">
+    <p class="eyebrow">// how i got here</p>
+    <h2>A Moore machine of my own</h2>
+    <div class="fsm-wrap">
+      <div class="fsm">
+        <div class="fsm-node">
+          <span class="state-id">S0</span>
+          <span class="state-name">Curious</span>
+          <span class="state-out">out: questions</span>
+        </div>
+        <div class="fsm-arrow"></div>
+        <div class="fsm-node">
+          <span class="state-id">S1</span>
+          <span class="state-name">Learning</span>
+          <span class="state-out">out: C, C++, Java</span>
+        </div>
+        <div class="fsm-arrow"></div>
+        <div class="fsm-node">
+          <span class="state-id">S2</span>
+          <span class="state-name">Building</span>
+          <span class="state-out">out: real projects</span>
+        </div>
+        <div class="fsm-arrow"></div>
+        <div class="fsm-node">
+          <span class="state-id">S3</span>
+          <span class="state-name">Shipping</span>
+          <span class="state-out">out: internship-ready</span>
+        </div>
+      </div>
+    </div>
+    <p class="fsm-caption">// output depends only on current state — Moore machine style</p>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <p class="eyebrow">// projects</p>
+    <h2>Selected work</h2>
+
+    <div class="project-card">
+      <div class="project-head">
+        <h3>Digital locker system</h3>
+        <span class="project-tag">digital design</span>
+      </div>
+      <p>A secure access-control locker modeled as a Moore finite state machine — the unlock output is determined entirely by the current state, not by the sequence of inputs that led there. Designed the state diagram, transition logic, and simulated the full behavior before implementation.</p>
+      <div class="stack-row">
+        <span class="stack-chip">Moore machine</span>
+        <span class="stack-chip">ModelSim</span>
+        <span class="stack-chip">digital logic design</span>
+      </div>
+      <a class="project-link" href="https://github.com/sathyaseelann2024" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-head">
+        <h3>Train ticket booking system</h3>
+        <span class="project-tag">full-stack web</span>
+      </div>
+      <p>A booking platform where users can search trains, check seat availability, and reserve tickets end to end. Built the interface and booking flow in React, with clean state handling so a seat can never be double-booked or a step skipped out of order.</p>
+      <div class="stack-row">
+        <span class="stack-chip">React</span>
+        <span class="stack-chip">JavaScript</span>
+        <span class="stack-chip">HTML</span>
+        <span class="stack-chip">CSS</span>
+      </div>
+      <a class="project-link" href="https://github.com/sathyaseelann2024" target="_blank" rel="noopener">View on GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <p class="eyebrow">// skills</p>
+    <h2>Tools I reach for</h2>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <span class="eyebrow">Languages</span>
+        <div class="skill-list">
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">C++</span>
+          <span class="skill-pill">Java</span>
+          <span class="skill-pill">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="eyebrow">Web & frameworks</span>
+        <div class="skill-list">
+          <span class="skill-pill">React</span>
+          <span class="skill-pill">HTML/CSS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="eyebrow">Tools & environments</span>
+        <div class="skill-list">
+          <span class="skill-pill">VS Code</span>
+          <span class="skill-pill">Code::Blocks</span>
+          <span class="skill-pill">ModelSim</span>
+          <span class="skill-pill">Keil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <p class="eyebrow">// contact</p>
+    <h2>Let's talk</h2>
+    <p>Looking for an internship where I can work across embedded logic and web development. Reach out — I reply fast.</p>
+    <div class="contact-row">
+      <a class="btn primary" href="mailto:sathyaseelan.n2024@vitstudent.ac.in">sathyaseelan.n2024@vitstudent.ac.in</a>
+      <a class="btn" href="https://github.com/sathyaseelann2024" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn" href="https://www.linkedin.com/in/sathyaseelan-n" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  designed &amp; built by Sathyaseelan N
+</footer>
+
+</body>
+</html>
